@@ -50,3 +50,6 @@ Berikut adalah prinsip-prinsip **Clean Code** yang telah saya terapkan dalam tut
    Jika saya membuat functional test baru dengan cara menyalin setup dan variable instance dari class sebelumnya, itu akan menurunkan kualitas kode. Walaupun kodenya berjalan, hal ini menciptakan duplikasi kode yang tidak perlu. Hal ini juga akan merusak kebersihan kode karena melanggar prinsip **DRY (Don't Repeat Yourself)**; kode akan sulit di-maintain karena jika ada perubahan, kita harus mengubah semua file test satu per satu secara manual.
 
    Solusi terbaik dari kondisi ini adalah menerapkan prinsip **Inheritance** atau membuat **Base Test Class** di mana semua variabel konfigurasi (seperti `serverPort`, `testBaseUrl`, `baseUrl`) dan method setup (`@BeforeEach`) dipindahkan ke dalam satu class induk ini. Lalu, class test lainnya (seperti `CreateProductFunctionalTest`, `HomePageFunctionalTest`, dll) cukup melakukan `extends BaseFunctionalTest`.
+
+
+testing
