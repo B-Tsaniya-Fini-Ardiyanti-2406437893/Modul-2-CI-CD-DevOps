@@ -34,7 +34,7 @@ public class ProductRepository {
 
     public Product findById(String id) {
         for (Product product : productData) {
-            if (product.getProductId().contains(id)) {
+            if (product.getProductId().equals(id)) {
                 return product;
             }
         }
