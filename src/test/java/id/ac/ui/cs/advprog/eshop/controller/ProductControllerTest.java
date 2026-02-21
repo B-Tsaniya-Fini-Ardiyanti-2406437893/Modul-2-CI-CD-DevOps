@@ -2,11 +2,8 @@ package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,15 +16,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = ProductController.class)
-@AutoConfigureMockMvc(addFilters = false) // Biar ga kena security filter (kalo ada)
+@AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 class ProductControllerTest {
 
     @Autowired
-    private MockMvc mockMvc; // Si Browser Palsu
+    private MockMvc mockMvc;
 
     @MockBean
-    private ProductService service; // Service-nya di-Mock (Pura-pura)
+    private ProductService service;
 
     @Test
     void testCreateProductPage() throws Exception {
@@ -43,16 +40,13 @@ class ProductControllerTest {
         product.setProductName("Sampo Cap Bambang");
         product.setProductQuantity(100);
 
-        // Pura-pura service.create berhasil
         when(service.create(any(Product.class))).thenReturn(product);
 
-        // Nembak POST request ke /product/create
         mockMvc.perform(post("/product/create")
-                        .flashAttr("product", product)) // Kirim datanya
-                .andExpect(status().is3xxRedirection()) // Harusnya redirect
-                .andExpect(redirectedUrl("list")); // Redirect ke halaman list
+                        .flashAttr("product", product))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("list"));
 
-        // Verifikasi service dipanggil
         verify(service).create(any(Product.class));
     }
 
