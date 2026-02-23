@@ -1,7 +1,14 @@
-1. Meaningful name
-2. Fucntion Should Do One Thing
-3. Comments
-4. Single Responsibility Principle (SRP)
+# 🛍️ Eshop Advance Programming
+
+**👤 Name:** Tsaniya Fini Ardiyanti  
+**📚 Class:** Advanced Programming B  
+**🆔 Student Number:** 2406437893
+---
+## 🚀 Live Demo
+🔗 **[Click This!](https://superb-luelle-tugas-advprog-eeb06ec5.koyeb.app/)** to see the deployed application.
+
+<details>
+<summary><b>📝 Refleksi Module 1: Coding Standards</b></summary>
 
 ## Reflection 1
 
@@ -33,8 +40,6 @@ Berikut adalah prinsip-prinsip **Clean Code** yang telah saya terapkan dalam tut
     Saya mengutamakan kesederhanaan dalam implementasi.
     * *Penerapan:* Menggunakan struktur data `ArrayList` sederhana untuk penyimpanan data sementara, karena kebutuhan saat ini belum memerlukan kompleksitas database relasional penuh.
 
-## Reflection 1
-
 1. **After writing the unit test, how do you feel? How many unit tests should be made in a class? How to make sure that our unit tests are enough to verify our program? It would be good if you learned about code coverage. Code coverage is a metric that can help you understand how much of your source is tested. If you have 100% code coverage, does that mean your code has no bugs or errors?**
 
    Menurut saya, tidak ada angka yang pasti untuk menentukan jumlah unit test yang harus ada dalam satu class. Jumlahnya bergantung pada kompleksitas method yang kita buat. Lalu, untuk memastikan unit test cukup, kita bisa menggunakan Code Coverage sebagai parameter kita. Namun, code coverage yang tinggi belum cukup; kita juga harus memastikan untuk menguji:
@@ -51,5 +56,27 @@ Berikut adalah prinsip-prinsip **Clean Code** yang telah saya terapkan dalam tut
 
    Solusi terbaik dari kondisi ini adalah menerapkan prinsip **Inheritance** atau membuat **Base Test Class** di mana semua variabel konfigurasi (seperti `serverPort`, `testBaseUrl`, `baseUrl`) dan method setup (`@BeforeEach`) dipindahkan ke dalam satu class induk ini. Lalu, class test lainnya (seperti `CreateProductFunctionalTest`, `HomePageFunctionalTest`, dll) cukup melakukan `extends BaseFunctionalTest`.
 
+</details>
 
-testing
+<details>
+<summary><b>📝 Refleksi Module 2: CI/CD & DevOps</b></summary>
+
+## Reflection 2
+### 📌 Soal 1: Code Quality Issues
+List the code quality issue(s) that you fixed during the exercise and explain your strategy on fixing them.
+### 📝 Jawaban
+> Selama mengerjakan exercise, saya memperbaiki beberapa isu terkait code quality. Salah satunya adalah *"Modifiers should be declared in the correct order"*, yang dalam praktiknya saya terapkan dengan menghapus modifier `public` yang tidak diperlukan pada test classes.
+> **Strategi** yang saya lakukan adalah meniadakan access modifier `public` dari test classes dan test methods JUnit 5, seperti `ProductControllerTest` dan `ProductServiceImplTest`. Hal ini karena JUnit 5 tidak lagi mewajibkan test classes dan methods bersifat `public`. Menjadikan test classes sebagai *package-private* merupakan pendekatan yang lebih direkomendasikan agar kode lebih bersih dan ruang lingkupnya lebih terbatas (*strictly scoped*).
+
+> Selain itu, saya juga menangani isu berupa *unused imports* di beberapa kelas Java. **Strategi** yang saya terapkan adalah meninjau ulang laporan dari SonarCloud untuk mengetahui secara tepat file mana saja yang memiliki isu tersebut, lalu menghapus *import* yang tidak digunakan. Langkah ini membantu menjaga kebersihan *codebase*, mengurangi potensi kebingungan, serta memastikan tidak ada dependensi yang tidak diperlukan yang ikut dimuat dalam file.
+
+---
+
+### 📌 Soal 2: CI/CD Implementation
+Look at your CI/CD workflows (GitHub)/pipelines (GitLab). Do you think the current implementation has met the definition of Continuous Integration and Continuous  Deployment? Explain the reasons (minimum 3 sentences)!
+### 📝 Jawaban
+> Ya, saya yakin implementasi yang saya terapkan sudah sepenuhnya memenuhi definisi dari *Continuous Integration* (CI) dan *Continuous Deployment* (CD).
+> Untuk **Continuous Integration**, setiap kali saya melakukan *push* kode baru atau membuka *Pull Request*, GitHub Actions secara otomatis memicu *workflow* untuk menjalankan *automated test suites*, sementara SonarCloud menampilkan hasil *static code analysis*. Hal ini memastikan bahwa setiap integrasi kode baru langsung diverifikasi kebenarannya serta kualitasnya sebelum digabungkan ke dalam *main codebase*.
+> Sementara untuk **Continuous Deployment**, saya menggunakan pendekatan *pull-based* dengan Koyeb. Ketika terdapat perubahan kode yang berhasil di-*merge* ke branch `master`, Koyeb secara otomatis mendeteksi perubahan tersebut, membangun *Docker image* berdasarkan `Dockerfile` yang telah disediakan, dan langsung men-*deploy* aplikasi yang telah diperbarui ke *server* produksi tanpa memerlukan intervensi manual. Dengan begitu, tercipta sebuah *pipeline* yang mulus dan menyeluruh, mulai dari menulis kode hingga kode tersebut dapat diakses oleh pengguna.
+
+</details>
