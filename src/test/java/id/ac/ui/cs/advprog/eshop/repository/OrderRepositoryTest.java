@@ -17,6 +17,8 @@ class OrderRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        orderRepository = new OrderRepository();
+
         List<Product> products = new ArrayList<>();
         Product product1 = new Product();
         product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
@@ -86,7 +88,7 @@ class OrderRepositoryTest {
             orderRepository.save(order);
         }
 
-        Order findResult = orderRepository.findById(orders.get(1).getId());
+        Order findResult = orderRepository.findById("zczc");
         assertNull(findResult);
     }
 
