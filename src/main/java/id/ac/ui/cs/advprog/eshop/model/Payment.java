@@ -11,17 +11,22 @@ public class Payment {
     private String id;
     private String method;
     private String status;
+    private Order order;
     private Map<String, String> paymentData;
 
-    public Payment(String id, String method, Map<String, String> paymentData) {
+    public Payment(String id, Order order, String method, Map<String, String> paymentData) {
         if (method == null || method.isEmpty()) {
             throw new IllegalArgumentException("Payment method cannot be empty");
         }
         if (paymentData == null || paymentData.isEmpty()) {
             throw new IllegalArgumentException("Payment data cannot be empty");
         }
+        if (order == null) {
+            throw new IllegalArgumentException("Order cannot be null");
+        }
 
         this.id = id;
+        this.order = order;
         this.method = method;
         this.paymentData = paymentData;
 

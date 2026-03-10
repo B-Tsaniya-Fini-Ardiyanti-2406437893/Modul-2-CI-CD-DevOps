@@ -1,9 +1,12 @@
 package id.ac.ui.cs.advprog.eshop.repository;
 
 import id.ac.ui.cs.advprog.eshop.model.Payment;
+import id.ac.ui.cs.advprog.eshop.model.Product;
+import id.ac.ui.cs.advprog.eshop.model.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,20 +17,30 @@ class PaymentRepositoryTest {
     PaymentRepository paymentRepository;
     Payment payment1;
     Payment payment2;
+    private Order order; 
 
     @BeforeEach
     void setUp() {
-        // Ingat pelajaran berharga tadi, jangan sampe lupa di-new! 😂
+        List<Product> products = new ArrayList<>();
+        Product product1 = new Product();
+        product1.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product1.setProductName("Sampo Cap Bambang");
+        product1.setProductQuantity(2);
+        products.add(product1);
+
+        this.order = new Order("13652556-012a-4c07-b546-54eb1396d79b",
+                products, 1708560000L, "Safira Sudrajat");
+
         paymentRepository = new PaymentRepository();
 
         Map<String, String> paymentData1 = new HashMap<>();
         paymentData1.put("voucherCode", "ESHOP1234ABC5678");
-        payment1 = new Payment("payment-1", "VOUCHER", paymentData1);
+        payment1 = new Payment("payment-1", order, "VOUCHER", paymentData1);
 
         Map<String, String> paymentData2 = new HashMap<>();
         paymentData2.put("address", "Jalan Margonda Raya");
         paymentData2.put("deliveryFee", "10000");
-        payment2 = new Payment("payment-2", "CASH_ON_DELIVERY", paymentData2);
+        payment2 = new Payment("payment-2", order, "CASH_ON_DELIVERY", paymentData2);
     }
 
     @Test
@@ -45,7 +58,6 @@ class PaymentRepositoryTest {
     void testSaveUpdate() {
         paymentRepository.save(payment1);
         
-        // Simulasi update status
         payment1.setStatus("REJECTED");
         Payment result = paymentRepository.save(payment1);
 
