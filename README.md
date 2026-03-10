@@ -180,3 +180,35 @@ Tanpa menerapkan **Dependency Inversion Principle (DIP)**, *module* tingkat ting
 
 
 </details>
+
+<details>
+<summary><b>📝 Refleksi Module 4: Refactoring and TDD </b></summary>
+
+Berdasarkan pertanyaan reflektif diri dari Percival (2017) mengenai tujuan pengujian, saya menemukan bahwa alur Test-Driven Development (TDD) sangat bermanfaat, meskipun membutuhkan perubahan pola pikir yang signifikan.
+
+1.  **Guiding the Design:** Menulis pengujian terlebih dahulu (fase **[RED]**) memaksa saya untuk memahami kebutuhan secara mendalam dan memikirkan desain model `Order` serta `OrderServiceImpl` sebelum menulis kode implementasi. Sebagai contoh, hal ini membuat saya berpikir ke depan tentang cara menangani *edge cases*, seperti status yang tidak valid atau daftar produk yang kosong, yang menghasilkan desain kelas yang lebih kokoh.
+2.  **Building Confidence:** Siklus *Red-Green-Refactor* menyediakan jaring pengaman yang kuat. Ketika saya akhirnya menulis implementasi (fase **[GREEN]** ) dan melihat pengujian berhasil, hal itu langsung memberi saya kepercayaan diri bahwa kode saya bekerja persis seperti yang diharapkan tanpa perlu pengujian manual yang melelahkan.
+
+Meskipun alurnya bermanfaat, saya menemui beberapa kendala selama proses pengujian yang perlu saya tingkatkan di masa mendatang:
+
+*   **Perencanaan Mock dan Dependensi yang Lebih Baik:** Selama fase RED, saya sedikit kesulitan dalam menyiapkan dependensi dengan benar (misalnya, lupa menginisialisasi `OrderRepository`, yang menyebabkan `NullPointerException`). Lain kali, saya perlu merencanakan pengaturan pengujian (`@BeforeEach`) dan memahami perilaku mock (`@Mock`, `InjectMocks`) dengan lebih matang sebelum mulai menulis kasus uji.
+*   **Menghindari Mocking yang Berlebihan:** Saya perlu memastikan bahwa saya menguji perilaku aktual dari kelas, bukan hanya menguji seberapa baik saya mengkonfigurasi Mockito.
+*   **Lingkup Pengujian yang Lebih Kecil:** Lain kali, saya akan mencoba menulis pengujian unit yang lebih kecil dan lebih terfokus dengan lebih sedikit *assertions* per pengujian untuk mempermudah proses debugging ketika pengujian gagal.
+
+---
+
+Berdasarkan prinsip-prinsip F.I.R.S.T, saya percaya bahwa pengujian unit saya telah berhasil mengikuti panduan inti tersebut, meskipun ada beberapa area yang perlu saya perhatikan lebih baik lagi di masa mendatang.
+
+Berikut adalah refleksi saya tentang bagaimana pengujian saya selaras dengan prinsip-prinsip tersebut:
+
+1.  **Fast (Cepat):** Pengujian saya berjalan sangat cepat. Dengan menggunakan Mockito di `OrderServiceImplTest` dan daftar *in-memory* di `OrderRepositoryTest`, saya menghindari operasi lambat seperti koneksi database atau panggilan jaringan.
+2.  **Independent (Mandiri):** Saya memastikan pengujian saya tidak saling bergantung. Dengan menggunakan anotasi `@BeforeEach` untuk menyiapkan objek `Order` dan `Product` yang baru, serta menginisialisasi ulang repository sebelum setiap pengujian, saya mencegah terjadinya *shared state* (keadaan bersama) dan menghindari ketergantungan pada urutan eksekusi.
+3.  **Repeatable (Dapat Diulang):** Pengujian dapat dijalankan di lingkungan mana pun (mesin lokal atau *pipeline* CI/CD) karena tidak bergantung pada konfigurasi eksternal atau basis data.
+4.  **Self-Validating (Memvalidasi Mandiri):** Setiap pengujian memiliki hasil keluaran boolean yang jelas. Saya menggunakan asersi JUnit (`assertEquals`, `assertThrows`, `assertTrue`, `assertNull`) sehingga rangkaian pengujian secara otomatis melaporkan berhasil/gagal tanpa perlu pemeriksaan manual dari log `System.out.println`.
+5.  **Timely (Tepat Waktu):** Saya mengikuti alur kerja TDD dengan menulis pengujian terlebih dahulu (fase [RED]) untuk menentukan perilaku yang diharapkan dari model `Order` dan layanan sebelum menulis implementasi yang sebenarnya.
+
+Meskipun saya telah menerapkan prinsip-prinsip tersebut, mempertahankan **Independensi** yang sesungguhnya dan pengaturan pengujian yang bersih cukup menantang. Selama pengembangan, saya lupa membuat objek dalam pengaturan `@BeforeEach` (yang menyebabkan `NullPointerException` di beberapa pengujian).
+
+Lain kali ketika saya membuat lebih banyak pengujian, saya perlu
+**memeriksa ulang pengaturan pengujian (fase Arrange)** Saya harus memastikan semua yang diperlukan (seperti Repositori atau Model) diinisialisasi dengan benar sebelum menguji logika untuk mencegah negatif palsu (pengujian gagal karena kode pengujian yang buruk, bukan karena kode produksi yang buruk).
+</details>
