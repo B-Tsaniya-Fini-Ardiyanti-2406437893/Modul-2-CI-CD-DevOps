@@ -62,7 +62,7 @@ class OrderServiceImplTest {
         doReturn(order).when(orderRepository).findById(order.getId());
 
         assertNull(orderService.createOrder(order));
-        verify(orderRepository, times(0).save(order));
+        verify(orderRepository, times(0)).save(order);
     }
 
     @Test
@@ -77,7 +77,7 @@ class OrderServiceImplTest {
 
         assertEquals(order.getId(), result.getId());
         assertEquals(OrderStatus.SUCCESS.getValue(), result.getStatus());
-        verify(orderRepository, times(1)).save(any(Order.class))
+        verify(orderRepository, times(1)).save(any(Order.class));
     }
 
     @Test
